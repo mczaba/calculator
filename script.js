@@ -12,14 +12,22 @@ let stringResult = "";
 
 
 numbers.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (addnumber) => {
+        if (stringResult !== "") {
+            stringOperation = "";
+            stringResult = "";
+        }
         stringOperation += button.textContent;
         operation.textContent = stringOperation;
     })
 })
 
 operators.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (addoperator) => {
+        if (stringResult !== "") {
+            stringOperation = stringResult;
+            stringResult = "";
+        }
         stringOperation += " " + button.textContent + " ";
         operation.textContent = stringOperation;
     })
@@ -34,31 +42,37 @@ clear.addEventListener("click", () => {
 })
 
 equal.addEventListener("click", () => {
-    let array = stringOperation.split(" ");
-    console.log(array);
-    while (array.indexOf("*") >= 0) {
-        let index = array.indexOf("*");
-        array[index - 1] = operate("*", array[index - 1], array[index + 1]);
-        array.splice(index, 2);
+    if (stringOperation !== "") {
+        let array = stringOperation.split(" ");
+        console.log(array);
+        while (array.indexOf("*") >= 0) {
+            let index = array.indexOf("*");
+            array[index - 1] = operate("*", array[index - 1], array[index + 1]);
+            array.splice(index, 2);
+        }
+        while (array.indexOf("/") >= 0) {
+            let index = array.indexOf("/");
+            array[index - 1] = operate("/", array[index - 1], array[index + 1]);
+            array.splice(index, 2);
+            if (array.indexOf("can't divide by 0") >= 0) {
+                array[0] = "can't divide by 0";
+                array.splice(1, array.length - 1);
+            }
+        }
+        while (array.indexOf("+") >= 0) {
+            let index = array.indexOf("+");
+            array[index - 1] = operate("+", array[index - 1], array[index + 1]);
+            array.splice(index, 2);
+        }
+        while (array.indexOf("-") >= 0) {
+            let index = array.indexOf("-");
+            array[index - 1] = operate("-", array[index - 1], array[index + 1]);
+            array.splice(index, 2);
+        }
+        console.log(array[0]);
+        stringResult = array[0].toString();
+        result.textContent = stringOperation + " = " + stringResult;
     }
-    while (array.indexOf("/") >= 0) {
-        let index = array.indexOf("/");
-        array[index - 1] = operate("/", array[index - 1], array[index + 1]);
-        array.splice(index, 2);
-    }
-    while (array.indexOf("+") >= 0) {
-        let index = array.indexOf("+");
-        array[index - 1] = operate("+", array[index - 1], array[index + 1]);
-        array.splice(index, 2);
-    }
-    while (array.indexOf("-") >= 0) {
-        let index = array.indexOf("-");
-        array[index - 1] = operate("-", array[index - 1], array[index + 1]);
-        array.splice(index, 2);
-    }
-    console.log(array[0]);
-    stringResult = "= " + array[0].toString();
-    result.textContent = stringResult;
 })
 
 
@@ -83,7 +97,11 @@ const mult = function(a, b) {
 const div = function(a, b) {
     let aNumber = +a;
     let bNumber = +b;
-    return aNumber / bNumber;
+    if (bNumber === 0) {
+        return "can't divide by 0";
+    } else {
+        return aNumber / bNumber;
+    }
 }
 
 const operate = function(operator, a, b) {
