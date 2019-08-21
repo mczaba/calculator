@@ -45,9 +45,9 @@ equal.addEventListener("click", () => {
     if (stringOperation !== "") {
         let array = stringOperation.split(" ");
         console.log(array);
-        while (array.indexOf("*") >= 0) {
-            let index = array.indexOf("*");
-            array[index - 1] = operate("*", array[index - 1], array[index + 1]);
+        while (array.indexOf("×") >= 0) {
+            let index = array.indexOf("×");
+            array[index - 1] = operate("×", array[index - 1], array[index + 1]);
             array.splice(index, 2);
         }
         while (array.indexOf("/") >= 0) {
@@ -109,7 +109,7 @@ const operate = function(operator, a, b) {
         return add(a, b);
     } else if (operator === "-") {
         return sub(a, b);
-    } else if (operator === "*") {
+    } else if (operator === "×") {
         return mult(a, b);
     } else if (operator === "/") {
         return div(a, b);
