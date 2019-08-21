@@ -4,6 +4,11 @@ button {
     background-color: #eee;
     border: 1px black solid;
     border-radius: 25px;
+    box-shadow: 5px 5px 5px #1c1b1b;
+}
+
+button:active {
+    background-color: #1f441d;
 }
 
 #background {
