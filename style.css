@@ -98,3 +98,6 @@ button:active {
 .operator {
     color: blue;
 }
+.number {
+    color: black;
+}
