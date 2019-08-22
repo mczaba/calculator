@@ -5,6 +5,7 @@ let equal = document.querySelector("#equal");
 let display = document.querySelector("#display");
 let operation = document.querySelector("#operation");
 let result = document.querySelector("#result");
+let dot = document.querySelector("#dot");
 
 let stringOperation = "";
 let stringResult = "";
@@ -30,8 +31,20 @@ operators.forEach((button) => {
         }
         stringOperation += " " + button.textContent + " ";
         operation.textContent = stringOperation;
+        dot.addEventListener("click", decimal);
     })
 })
+
+const decimal = function(){
+    if (stringResult !== "") {
+        stringOperation = "";
+        stringResult = "";
+    }
+    stringOperation += ".";
+    operation.textContent = stringOperation;
+    dot.removeEventListener("click", decimal);
+}
+dot.addEventListener("click", decimal);
 
 clear.addEventListener("click", () => {
     stringOperation = "";
