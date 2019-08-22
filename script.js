@@ -59,6 +59,7 @@ backspace.addEventListener("click", () => {
     let string=Array.from(stringOperation);
     if (string[string.length-1]=== " "){
         string.splice((string.length-3),3);
+        dot.removeEventListener("click", decimal);
 
     }
     else{
