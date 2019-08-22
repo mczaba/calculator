@@ -37,7 +37,7 @@ const div = function(a, b) {
     let aNumber = +a;
     let bNumber = +b;
     if (bNumber === 0) {
-        return "can't divide by 0";
+        return "error : div by 0";
     } else {
         return aNumber / bNumber;
     }
@@ -67,8 +67,8 @@ const calculate = function(){
             let index = array.indexOf("/");
             array[index - 1] = operate("/", array[index - 1], array[index + 1]);
             array.splice(index, 2);
-            if (array.indexOf("can't divide by 0") >= 0) {
-                array[0] = "can't divide by 0";
+            if (array.indexOf("error : div by 0") >= 0) {
+                array[0] = "error : div by 0";
                 array.splice(1, array.length - 1);
             }
         }
@@ -82,8 +82,10 @@ const calculate = function(){
             array[index - 1] = operate("-", array[index - 1], array[index + 1]);
             array.splice(index, 2);
         }
-        let resultCalc = Math.floor(array[0]*1000000000)/1000000000;
-        stringResult = resultCalc.toString();
+        if (array[0] !== "error : div by 0"){
+            array[0] = Math.floor(array[0]*1000000000)/1000000000;
+        }
+        stringResult = array[0].toString();
         result.textContent = " = " + stringResult;
     }
 }
