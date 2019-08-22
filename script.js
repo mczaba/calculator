@@ -121,29 +121,43 @@ const clearCalc = function(){
     operation.textContent = stringOperation;
     result.textContent = stringResult;
 }
+
+
 numbers.forEach((button) => {
     button.addEventListener("click", () => {
-        if (stringResult !== "") {
-            stringOperation = "";
-            stringResult = "";
+        if (stringOperation.length < 15){
+            if (stringResult !== "") {
+                stringOperation = "";
+                stringResult = "";
+            }
+            stringOperation += button.textContent;
+            operation.textContent = stringOperation;
+            opOK=true;
         }
-        stringOperation += button.textContent;
-        operation.textContent = stringOperation;
-        opOK=true;
+        else {
+            stringResult = "Expression too long";
+            result.textContent = stringResult;
+        }
     })
 })
 
 operators.forEach((button) => {
     button.addEventListener("click", () => {
-        if (opOK){
-            if (stringResult !== "") {
-                stringOperation = stringResult;
-                stringResult = "";
+        if (stringOperation.length < 12){
+            if (opOK){
+                if (stringResult !== "") {
+                    stringOperation = stringResult;
+                    stringResult = "";
+                }
+                stringOperation += " " + button.textContent + " ";
+                operation.textContent = stringOperation;
+                dotOK=true;
+                opOK=false;
             }
-            stringOperation += " " + button.textContent + " ";
-            operation.textContent = stringOperation;
-            dotOK=true;
-            opOK=false;
+        }
+        else {
+            stringResult = "Expression too long";
+            result.textContent = stringResult;
         }
     })
 })
@@ -176,54 +190,78 @@ document.addEventListener('keydown', function(event) {
         back();
     }
     else if (character === "*"){ //add mult sign if user press *
-        if (opOK){
-            if (stringResult !== "") {
-                stringOperation = stringResult;
-                stringResult = "";
+        if (stringOperation.length < 12){
+            if (opOK){
+                if (stringResult !== "") {
+                    stringOperation = stringResult;
+                    stringResult = "";
+                }
+                stringOperation += " × ";
+                operation.textContent = stringOperation;
+                dotOK=true;
+                opOK=false;
             }
-            stringOperation += " × ";
-            operation.textContent = stringOperation;
-            dotOK=true;
-            opOK=false;
+        }
+        else {
+            stringResult = "Expression too long";
+            result.textContent = stringResult;
         }
     }
     else if (character === "/"){
+        if (stringOperation.length < 12){
         event.preventDefault();
-        if (opOK){
-            if (stringResult !== "") {
-                stringOperation = stringResult;
-                stringResult = "";
+            if (opOK){
+                if (stringResult !== "") {
+                    stringOperation = stringResult;
+                    stringResult = "";
+                }
+                stringOperation += " ÷ ";
+                operation.textContent = stringOperation;
+                dotOK=true;
+                opOK=false;
             }
-            stringOperation += " ÷ ";
-            operation.textContent = stringOperation;
-            dotOK=true;
-            opOK=false;
+        }
+        else {
+            stringResult = "Expression too long";
+            result.textContent = stringResult;
         }
     }
     else if ((character === "." )&& (dotOK === true)){
         decimal();
     }
     else if (/^[0-9]$/.test(character) ){ //add the number to the operation string
-        if (stringResult !== "") {
-            stringOperation = "";
-            stringResult = "";
+        if (stringOperation.length < 15){
+            if (stringResult !== "") {
+                stringOperation = "";
+                stringResult = "";
+            }
+            stringOperation += character;
+            operation.textContent = stringOperation;
+            opOK=true;
         }
-        stringOperation += character;
-        operation.textContent = stringOperation;
-        opOK=true;
+        else {
+            stringResult = "Expression too long";
+            result.textContent = stringResult;
+        }
 
     }
     else if (character === "+" || character === "-"){
         event.preventDefault();
-        if (opOK){
-            if (stringResult !== "") {
-                stringOperation = stringResult;
-                stringResult = "";
+        if (stringOperation.length < 12){
+            if (opOK){
+                if (stringResult !== "") {
+                    stringOperation = stringResult;
+                    stringResult = "";
+                }
+                stringOperation += " " + character +" ";
+                operation.textContent = stringOperation;
+                dotOK=true;
+                opOK=false;
             }
-            stringOperation += " " + character +" ";
-            operation.textContent = stringOperation;
-            dotOK=true;
-            opOK=false;
+        }
+        else {
+            stringResult = "Expression too long";
+            result.textContent = stringResult;
         }
     }
     
