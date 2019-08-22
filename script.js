@@ -84,9 +84,11 @@ const calculate = function(){
         }
         if (array[0] !== "error : div by 0"){
             array[0] = Math.floor(array[0]*1000000000)/1000000000;
+            stringResult = array[0].toString();
+            result.textContent = " = " + stringResult;
         }
         stringResult = array[0].toString();
-        result.textContent = " = " + stringResult;
+        result.textContent = stringResult;
     }
 }
 
