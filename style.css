@@ -4,7 +4,6 @@ button {
     background-color: grey;
     border: 1px black solid;
     border-radius: 8px;
-    box-shadow: 5px 5px 5px #1c1b1b;
 }
 
 button:active {
@@ -38,7 +37,6 @@ button:active {
     margin-left: auto;
     margin-right: auto;
     font-family: sans-serif;
-    box-shadow: 5px 5px 5px #1c1b1b;
     position: relative;
 }
 
