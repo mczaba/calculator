@@ -13,6 +13,8 @@ let stringResult = "";
 let dotOK = true;
 let opOK = false;
 
+console.log("hello");
+
 const add = function(a, b) {
     let aNumber = +a;
     let bNumber = +b;
@@ -82,7 +84,7 @@ const calculate = function(){
         }
         console.log(array[0]);
         stringResult = array[0].toString();
-        result.textContent = stringOperation + " = " + stringResult;
+        result.textContent = " = " + stringResult;
     }
 }
 

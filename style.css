@@ -1,7 +1,7 @@
 button {
     margin: 5px;
     font-size: 20px;
-    background-color: #eee;
+    background-color: grey;
     border: 1px black solid;
     border-radius: 25px;
     box-shadow: 5px 5px 5px #1c1b1b;
@@ -16,13 +16,14 @@ button:active {
     margin-left: auto;
     margin-right: auto;
     width: 575px;
-    background-color: #464646;
+    background-color: #19312d;
     border: 1px black solid;
     border-radius: 50px;
     text-align: center;
     text-justify: center;
     font-family: sans-serif;
     font-size: 25px;
+    color: grey;
 }
 
 #display {
@@ -34,14 +35,17 @@ button:active {
     font-size: 28px;
     margin-bottom: 33.5px;
     margin-top: 33.5px;
-    background-color: white;
+    background-color: grey;
+    color: black;
     margin-left: auto;
     margin-right: auto;
     font-family: sans-serif;
+    box-shadow: 5px 5px 5px #1c1b1b
 }
 
 #result {
     font-style: italic;
+    float: left;
 }
 
 #buttons {
@@ -73,7 +77,7 @@ button:active {
     color: red;
 }
 
-#return{
+#return {
     color: red;
 }
 
