@@ -9,7 +9,7 @@ let dot = document.querySelector("#dot");
 let backspace = document.querySelector("#return");
 
 let stringOperation = "";
-let stringResult = "";
+let stringResult = " ";
 let dotOK = true;
 let opOK = false;
 
@@ -82,8 +82,8 @@ const calculate = function(){
             array[index - 1] = operate("-", array[index - 1], array[index + 1]);
             array.splice(index, 2);
         }
-        console.log(array[0]);
-        stringResult = array[0].toString();
+        let resultCalc = Math.floor(array[0]*1000000000)/1000000000;
+        stringResult = resultCalc.toString();
         result.textContent = " = " + stringResult;
     }
 }
