@@ -11,6 +11,7 @@ let backspace = document.querySelector("#return");
 let stringOperation = "";
 let stringResult = "";
 let dotOK = true;
+let opOK = false;
 
 const add = function(a, b) {
     let aNumber = +a;
@@ -124,19 +125,22 @@ numbers.forEach((button) => {
         }
         stringOperation += button.textContent;
         operation.textContent = stringOperation;
+        opOK=true;
     })
 })
 
 operators.forEach((button) => {
     button.addEventListener("click", () => {
-        if (stringResult !== "") {
-            stringOperation = stringResult;
-            stringResult = "";
+        if (opOK){
+            if (stringResult !== "") {
+                stringOperation = stringResult;
+                stringResult = "";
+            }
+            stringOperation += " " + button.textContent + " ";
+            operation.textContent = stringOperation;
+            dotOK=true;
+            opOK=false;
         }
-        stringOperation += " " + button.textContent + " ";
-        operation.textContent = stringOperation;
-        //dot.addEventListener("click", decimal);
-        dotOK=true;
     })
 })
 
@@ -156,8 +160,7 @@ equal.addEventListener("click", calculate)
 
 
 document.addEventListener('keydown', function(event) {
-    let character = event.key
-    console.log(character);
+    let character = event.key;
     if (character === "Enter"){ //calculate if the user press enter
         event.preventDefault();
         calculate();
@@ -169,13 +172,16 @@ document.addEventListener('keydown', function(event) {
         back();
     }
     else if (character === "*"){ //add mult sign if user press *
-        if (stringResult !== "") {
-            stringOperation = stringResult;
-            stringResult = "";
+        if (opOK){
+            if (stringResult !== "") {
+                stringOperation = stringResult;
+                stringResult = "";
+            }
+            stringOperation += " × ";
+            operation.textContent = stringOperation;
+            dotOK=true;
+            opOK=false;
         }
-        stringOperation += " × ";
-        operation.textContent = stringOperation;
-        dotOK=true;
     }
     else if ((character === "." )&& (dotOK === true)){
         decimal();
@@ -187,16 +193,21 @@ document.addEventListener('keydown', function(event) {
         }
         stringOperation += character;
         operation.textContent = stringOperation;
+        opOK=true;
 
     }
     else if (character === "+" || character === "-" || character === "/"){
-        if (stringResult !== "") {
-            stringOperation = stringResult;
-            stringResult = "";
+        event.preventDefault();
+        if (opOK){
+            if (stringResult !== "") {
+                stringOperation = stringResult;
+                stringResult = "";
+            }
+            stringOperation += " " + character +" ";
+            operation.textContent = stringOperation;
+            dotOK=true;
+            opOK=false;
         }
-        stringOperation += " " + character +" ";
-        operation.textContent = stringOperation;
-        dotOK=true;
     }
     
 })

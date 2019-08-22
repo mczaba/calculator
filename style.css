@@ -8,14 +8,15 @@ button {
 }
 
 button:active {
-    background-color: #576f4e;
+    /* background-color: #464646; */
+    transform: translate(3px, 5px);
 }
 
 #background {
     margin-left: auto;
     margin-right: auto;
     width: 575px;
-    background-color: #576f4e;
+    background-color: #464646;
     border: 1px black solid;
     border-radius: 50px;
     text-align: center;
