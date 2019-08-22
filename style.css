@@ -18,13 +18,15 @@ button:active {
     border-radius: 16px;
     text-align: center;
     text-justify: center;
-    font-family: "Orbitron", sans-serif;
     font-size: 12px;
     color: grey;
 }
 
+#header {
+    font-family: "Orbitron", sans-serif;
+}
+
 #display {
-    font-family:"Orbitron", sans-serif;
     border: 1px black solid;
     border-radius: 8px;
     text-align: center;
@@ -37,7 +39,6 @@ button:active {
     color: black;
     margin-left: auto;
     margin-right: auto;
-    font-family: sans-serif;
     position: relative;
 }
 
@@ -55,7 +56,6 @@ button:active {
 }
 
 #buttons {
-    font-family:"Orbitron", sans-serif;
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
     grid-template-rows: auto;

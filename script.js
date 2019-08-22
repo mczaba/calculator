@@ -48,7 +48,7 @@ const operate = function(operator, a, b) {
         return add(a, b);
     } else if (operator === "-") {
         return sub(a, b);
-    } else if (operator === "×") {
+    } else if (operator === "*") {
         return mult(a, b);
     } else if (operator === "/") {
         return div(a, b);
@@ -60,11 +60,11 @@ const calculate = function(){
         let array = stringOperation.split(" ");
         while (array.indexOf("×") >= 0) {
             let index = array.indexOf("×");
-            array[index - 1] = operate("×", array[index - 1], array[index + 1]);
+            array[index - 1] = operate("*", array[index - 1], array[index + 1]);
             array.splice(index, 2);
         }
-        while (array.indexOf("/") >= 0) {
-            let index = array.indexOf("/");
+        while (array.indexOf("÷") >= 0) {
+            let index = array.indexOf("÷");
             array[index - 1] = operate("/", array[index - 1], array[index + 1]);
             array.splice(index, 2);
             if (array.indexOf("error : div by 0") >= 0) {
@@ -187,6 +187,19 @@ document.addEventListener('keydown', function(event) {
             opOK=false;
         }
     }
+    else if (character === "/"){
+        event.preventDefault();
+        if (opOK){
+            if (stringResult !== "") {
+                stringOperation = stringResult;
+                stringResult = "";
+            }
+            stringOperation += " ÷ ";
+            operation.textContent = stringOperation;
+            dotOK=true;
+            opOK=false;
+        }
+    }
     else if ((character === "." )&& (dotOK === true)){
         decimal();
     }
@@ -200,7 +213,7 @@ document.addEventListener('keydown', function(event) {
         opOK=true;
 
     }
-    else if (character === "+" || character === "-" || character === "/"){
+    else if (character === "+" || character === "-"){
         event.preventDefault();
         if (opOK){
             if (stringResult !== "") {
