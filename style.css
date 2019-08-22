@@ -7,7 +7,7 @@ button {
 }
 
 button:active {
-    transform: translate(3px, 5px);
+    transform: scale(0.9);
 }
 
 #background {
