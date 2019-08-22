@@ -6,6 +6,7 @@ let display = document.querySelector("#display");
 let operation = document.querySelector("#operation");
 let result = document.querySelector("#result");
 let dot = document.querySelector("#dot");
+let backspace = document.querySelector("#return");
 
 let stringOperation = "";
 let stringResult = "";
@@ -52,6 +53,19 @@ clear.addEventListener("click", () => {
     operation.textContent = stringOperation;
     result.textContent = stringResult;
 
+})
+
+backspace.addEventListener("click", () => {
+    let string=Array.from(stringOperation);
+    if (string[string.length-1]=== " "){
+        string.splice((string.length-3),3);
+
+    }
+    else{
+        string.pop();
+    }
+    stringOperation = string.join("");
+    operation.textContent = stringOperation;
 })
 
 equal.addEventListener("click", () => {
