@@ -1,5 +1,5 @@
 body{
-    background-image: url("background.jpg");
+    background-image: url("img/background.jpg");
     background-size: cover;
     background-attachment: fixed;
 }
@@ -17,7 +17,7 @@ button:active {
 }
 
 #notepad {
-    background-image: url("clipboard.png");
+    background-image: url("img/clipboard.png");
     background-size: cover;
     height: 1100px;
     width: 780px;
@@ -130,7 +130,11 @@ button:active {
 #notepadButtons button{
     background-color: #00f0;
     color: #e36d16;
-    border: #e36d16 1px solid;
+    border: #e36d16 1px;
+}
+
+#notepadButtons button:hover{
+    cursor: pointer;
 }
 
 #notepadDisplay {
@@ -162,10 +166,9 @@ button:active {
 
 #notepadDisplay div button{
     background-color: #00f0;
-    background-image: url("eraser2.png");
+    background-image: url("img/eraser.png");
     width: 50px;
     height: 50px;
-    /* background-size: cover; */
     border: 1px;
 
 }
