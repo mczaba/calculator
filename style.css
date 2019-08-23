@@ -126,6 +126,13 @@ button:active {
     top: 120px;
     left: 80px;
 }
+
+#notepadButtons button{
+    background-color: #00f0;
+    color: #e36d16;
+    border: #e36d16 1px solid;
+}
+
 #notepadDisplay {
     display: grid;
     grid-template-columns: auto;
@@ -152,6 +159,22 @@ button:active {
     margin: 0;
 
 }
+
+#notepadDisplay div button{
+    background-color: #00f0;
+    background-image: url("eraser2.png");
+    width: 50px;
+    height: 50px;
+    /* background-size: cover; */
+    border: 1px;
+
+}
+
+#notepadDisplay div button:hover {
+    cursor: pointer;
+}
+
+
 #addNotePad{
-    margin-right: 260px;
+    margin-right: 280px;
 }

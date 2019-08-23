@@ -275,20 +275,25 @@ document.addEventListener('keydown', function(event) {
 let addNotePad = document.querySelector("#addNotePad");
 let notepadDisplay = document.querySelector("#notepadDisplay");
 let clearNotePad = document.querySelector("#clearNotePad");
+let lines = 0;
 
 
 addNotePad.addEventListener("click", () => {
+    if (lines >= 10){
+        notepadDisplay.removeChild(notepadDisplay.lastChild);
+        lines--;
+    }
     let display = document.createElement("div");
     let displayText = document.createElement("p");
     let displayButton = document.createElement("button");
-    displayButton.textContent = "delete";
     displayText.textContent = operation.textContent + result.textContent;
     display.appendChild(displayText);
     display.appendChild(displayButton);
-    notepadDisplay.appendChild(display);
+    notepadDisplay.insertBefore(display, notepadDisplay.children[0]);
     displayButton.addEventListener("click", () => {
         notepadDisplay.removeChild(display);
     })
+    lines++;
 })
 
 clearNotePad.addEventListener("click", () => {
