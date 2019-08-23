@@ -87,8 +87,10 @@ const calculate = function(){
             stringResult = array[0].toString();
             result.textContent = " = " + stringResult;
         }
+        else {
         stringResult = array[0].toString();
         result.textContent = stringResult;
+        }
     }
 }
 
@@ -267,4 +269,30 @@ document.addEventListener('keydown', function(event) {
         }
     }
     
+})
+
+
+let addNotePad = document.querySelector("#addNotePad");
+let notepadDisplay = document.querySelector("#notepadDisplay");
+let clearNotePad = document.querySelector("#clearNotePad");
+
+
+addNotePad.addEventListener("click", () => {
+    let display = document.createElement("div");
+    let displayText = document.createElement("p");
+    let displayButton = document.createElement("button");
+    displayButton.textContent = "delete";
+    displayText.textContent = operation.textContent + result.textContent;
+    display.appendChild(displayText);
+    display.appendChild(displayButton);
+    notepadDisplay.appendChild(display);
+    displayButton.addEventListener("click", () => {
+        notepadDisplay.removeChild(display);
+    })
+})
+
+clearNotePad.addEventListener("click", () => {
+    while (notepadDisplay.firstChild){
+        notepadDisplay.removeChild(notepadDisplay.firstChild);
+    }
 })
