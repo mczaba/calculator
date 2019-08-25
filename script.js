@@ -95,17 +95,18 @@ const calculate = function(){
 }
 
 const back = function(){
-    let string=Array.from(stringOperation);
-    if (string[string.length-1]=== " "){
-        string.splice((string.length-3),3);
-        dot.removeEventListener("click", decimal);
-
+    if (stringResult === ""){
+        let string=Array.from(stringOperation);
+        if (string[string.length-1]=== " "){
+            string.splice((string.length-3),3);
+            dot.removeEventListener("click", decimal);
+        }
+        else{
+            string.pop();
+        }
+        stringOperation = string.join("");
+        operation.textContent = stringOperation;
     }
-    else{
-        string.pop();
-    }
-    stringOperation = string.join("");
-    operation.textContent = stringOperation;
 }
 
 const decimal = function(){
@@ -126,6 +127,14 @@ const clearCalc = function(){
     result.textContent = stringResult;
 }
 
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > milliseconds){
+        break;
+      }
+    }
+  }
 
 numbers.forEach((button) => {
     button.addEventListener("click", () => {
@@ -133,6 +142,7 @@ numbers.forEach((button) => {
             if (stringResult !== "") {
                 stringOperation = "";
                 stringResult = "";
+                result.textContent = stringResult;
             }
             stringOperation += button.textContent;
             operation.textContent = stringOperation;
@@ -152,6 +162,7 @@ operators.forEach((button) => {
                 if (stringResult !== "") {
                     stringOperation = stringResult;
                     stringResult = "";
+                    result.textContent = stringResult;
                 }
                 stringOperation += " " + button.textContent + " ";
                 operation.textContent = stringOperation;
@@ -186,19 +197,32 @@ document.addEventListener('keydown', function(event) {
     if (character === "Enter"){ //calculate if the user press enter
         event.preventDefault();
         calculate();
+        equal.style.transform = "scale(0.85)";
+        setTimeout(() => { equal.style.transform = "scale(1)"; }, 200);
     }
     else if (character === "Escape"){
         clearCalc();
+        clear.style.transform = "scale(0.85)";
+        setTimeout(() => { clear.style.transform = "scale(1)"; }, 200);
     }
     else if (character === "Backspace"){ //remove last element from the string if user press backspace
         back();
+        backspace.style.transform = "scale(0.85)";
+        setTimeout(() => { backspace.style.transform = "scale(1)"; }, 200);
     }
     else if (character === "*"){ //add mult sign if user press *
+        operators.forEach((button) => {
+            if ("×" === button.textContent){
+                button.style.transform = "scale(0.85)";
+                setTimeout(() => { button.style.transform = "scale(1)"; }, 200);
+            }
+        })
         if (stringOperation.length < 12){
             if (opOK){
                 if (stringResult !== "") {
                     stringOperation = stringResult;
                     stringResult = "";
+                    result.textContent = stringResult;
                 }
                 stringOperation += " × ";
                 operation.textContent = stringOperation;
@@ -212,12 +236,19 @@ document.addEventListener('keydown', function(event) {
         }
     }
     else if (character === "/"){
+        operators.forEach((button) => {
+            if ("÷" === button.textContent){
+                button.style.transform = "scale(0.85)";
+                setTimeout(() => { button.style.transform = "scale(1)"; }, 200);
+            }
+        })
         if (stringOperation.length < 12){
         event.preventDefault();
             if (opOK){
                 if (stringResult !== "") {
                     stringOperation = stringResult;
                     stringResult = "";
+                    result.textContent = stringResult;
                 }
                 stringOperation += " ÷ ";
                 operation.textContent = stringOperation;
@@ -232,12 +263,21 @@ document.addEventListener('keydown', function(event) {
     }
     else if ((character === "." )&& (dotOK === true)){
         decimal();
+        dot.style.transform = "scale(0.85)";
+        setTimeout(() => { dot.style.transform = "scale(1)"; }, 200);
     }
     else if (/^[0-9]$/.test(character) ){ //add the number to the operation string
+        numbers.forEach((button) => {
+            if (character === button.textContent){
+                button.style.transform = "scale(0.85)";
+                setTimeout(() => { button.style.transform = "scale(1)"; }, 200);
+            }
+        })
         if (stringOperation.length < 15){
             if (stringResult !== "") {
                 stringOperation = "";
                 stringResult = "";
+                result.textContent = stringResult;
             }
             stringOperation += character;
             operation.textContent = stringOperation;
@@ -250,12 +290,19 @@ document.addEventListener('keydown', function(event) {
 
     }
     else if (character === "+" || character === "-"){
+        operators.forEach((button) => {
+            if (character === button.textContent){
+                button.style.transform = "scale(0.85)";
+                setTimeout(() => { button.style.transform = "scale(1)"; }, 200);
+            }
+        })
         event.preventDefault();
         if (stringOperation.length < 12){
             if (opOK){
                 if (stringResult !== "") {
                     stringOperation = stringResult;
                     stringResult = "";
+                    result.textContent = stringResult;
                 }
                 stringOperation += " " + character +" ";
                 operation.textContent = stringOperation;
@@ -292,6 +339,7 @@ addNotePad.addEventListener("click", () => {
     notepadDisplay.insertBefore(display, notepadDisplay.children[0]);
     displayButton.addEventListener("click", () => {
         notepadDisplay.removeChild(display);
+        lines--;
     })
     lines++;
 })
@@ -300,4 +348,5 @@ clearNotePad.addEventListener("click", () => {
     while (notepadDisplay.firstChild){
         notepadDisplay.removeChild(notepadDisplay.firstChild);
     }
+    lines = 0;
 })
