@@ -10,30 +10,29 @@ let backspace = document.querySelector("#return");
 
 let stringOperation = "";
 let stringResult = " ";
-let dotOK = true;
 let opOK = false;
 
 console.log("hello");
 
-const add = function(a, b) {
+const add = function(a, b) {  //add 2 numbers taken as strings
     let aNumber = +a;
     let bNumber = +b;
     return aNumber + bNumber;
 }
 
-const sub = function(a, b) {
+const sub = function(a, b) {   //substract 2 numbers taken as strings
     let aNumber = +a;
     let bNumber = +b;
     return aNumber - bNumber;
 }
 
-const mult = function(a, b) {
+const mult = function(a, b) {   //multiply 2 numbers taken as strings
     let aNumber = +a;
     let bNumber = +b;
     return aNumber * bNumber;
 }
 
-const div = function(a, b) {
+const div = function(a, b) {  //divide 2 numbers taken as strings
     let aNumber = +a;
     let bNumber = +b;
     if (bNumber === 0) {
@@ -43,7 +42,7 @@ const div = function(a, b) {
     }
 }
 
-const operate = function(operator, a, b) {
+const operate = function(operator, a, b) {  //call the appropriate operation function for the 2 numbers and the operator
     if (operator === "+") {
         return add(a, b);
     } else if (operator === "-") {
@@ -55,51 +54,51 @@ const operate = function(operator, a, b) {
     } else { return "error"; }
 }
 
-const calculate = function(){
+const calculate = function(){ //takes the stringOperation, do the calculations and display the result
     if (stringOperation !== "") {
-        let array = stringOperation.split(" ");
-        while (array.indexOf("×") >= 0) {
+        let array = stringOperation.split(" "); //split stringOperation in an array of number operator number operator etc
+        while (array.indexOf("×") >= 0) { //search and do all multiplications
             let index = array.indexOf("×");
             array[index - 1] = operate("*", array[index - 1], array[index + 1]);
             array.splice(index, 2);
         }
-        while (array.indexOf("÷") >= 0) {
+        while (array.indexOf("÷") >= 0) { //search and do all divisions
             let index = array.indexOf("÷");
             array[index - 1] = operate("/", array[index - 1], array[index + 1]);
             array.splice(index, 2);
-            if (array.indexOf("error : div by 0") >= 0) {
+            if (array.indexOf("error : div by 0") >= 0) { //if some division by 0 was made, array becomes just an error
                 array[0] = "error : div by 0";
                 array.splice(1, array.length - 1);
             }
         }
-        while (array.indexOf("+") >= 0) {
+        while (array.indexOf("+") >= 0) { //search and do all additions
             let index = array.indexOf("+");
             array[index - 1] = operate("+", array[index - 1], array[index + 1]);
             array.splice(index, 2);
         }
-        while (array.indexOf("-") >= 0) {
+        while (array.indexOf("-") >= 0) { //search and do all substraction
             let index = array.indexOf("-");
             array[index - 1] = operate("-", array[index - 1], array[index + 1]);
             array.splice(index, 2);
         }
-        if (array[0] !== "error : div by 0"){
-            array[0] = Math.floor(array[0]*1000000000)/1000000000;
+        if (array[0] !== "error : div by 0"){ //if no division by 0 was made, display the result 
+            array[0] = Math.floor(array[0]*1000000000)/1000000000; //round in case of decimal too big
             stringResult = array[0].toString();
             result.textContent = " = " + stringResult;
         }
-        else {
+        else { //if some division by 0 was made display the error
         stringResult = array[0].toString();
         result.textContent = stringResult;
         }
     }
 }
 
-const back = function(){
+const back = function(){  //removes last character typed
     if (stringResult === ""){
         let string=Array.from(stringOperation);
         if (string[string.length-1]=== " "){
             string.splice((string.length-3),3);
-            dot.removeEventListener("click", decimal);
+            opOK=true;
         }
         else{
             string.pop();
@@ -109,72 +108,72 @@ const back = function(){
     }
 }
 
-const decimal = function(){
-    if (dotOK){
+const decimal = function(){ //check if adding a dot is possible and adds it
+    let dotIndex = stringOperation.lastIndexOf(".")
+    let spaceIndex = stringOperation.lastIndexOf(" ");
+    if (spaceIndex <= dotIndex){
         if (stringResult !== "") {
             stringOperation = "";
             stringResult = "";
         }
         stringOperation += ".";
         operation.textContent = stringOperation;
-        dotOK=false;
     }
 }
-const clearCalc = function(){
+const clearCalc = function(){ //reset the calculator
     stringOperation = "";
     stringResult = "";
     operation.textContent = stringOperation;
     result.textContent = stringResult;
 }
 
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-      if ((new Date().getTime() - start) > milliseconds){
-        break;
-      }
+const addNumber = function(number){ //add a number to the operation string
+    if (stringOperation.length < 15){
+        if (stringResult !== "") {
+            stringOperation = "";
+            stringResult = "";
+            result.textContent = stringResult;
+        }
+        stringOperation += number;
+        operation.textContent = stringOperation;
+        opOK=true;
     }
-  }
+    else {
+        stringResult = "Expression too long";
+        result.textContent = stringResult;
+    }
+}
 
-numbers.forEach((button) => {
-    button.addEventListener("click", () => {
-        if (stringOperation.length < 15){
+const addOperator = function(operator){ //add an operator to the operation string
+    if (stringOperation.length < 12){
+        if (opOK){
             if (stringResult !== "") {
-                stringOperation = "";
+                stringOperation = stringResult;
                 stringResult = "";
                 result.textContent = stringResult;
             }
-            stringOperation += button.textContent;
+            stringOperation += " " + operator + " ";
             operation.textContent = stringOperation;
-            opOK=true;
+            opOK=false;
         }
-        else {
-            stringResult = "Expression too long";
-            result.textContent = stringResult;
-        }
-    })
+    }
+    else {
+        stringResult = "Expression too long";
+        result.textContent = stringResult;
+    }
+}
+
+const press = function(button){ //makes a button look like it was pressed
+    button.style.transform = "scale(0.85)";
+    setTimeout(() => { button.style.transform = "scale(1)"; }, 200);
+}
+
+numbers.forEach((button) => {
+    button.addEventListener("click", function(){addNumber(button.textContent)})
 })
 
 operators.forEach((button) => {
-    button.addEventListener("click", () => {
-        if (stringOperation.length < 12){
-            if (opOK){
-                if (stringResult !== "") {
-                    stringOperation = stringResult;
-                    stringResult = "";
-                    result.textContent = stringResult;
-                }
-                stringOperation += " " + button.textContent + " ";
-                operation.textContent = stringOperation;
-                dotOK=true;
-                opOK=false;
-            }
-        }
-        else {
-            stringResult = "Expression too long";
-            result.textContent = stringResult;
-        }
-    })
+    button.addEventListener("click", () => {addOperator(button.textContent)})
 })
 
 
@@ -194,126 +193,39 @@ equal.addEventListener("click", calculate)
 
 document.addEventListener('keydown', function(event) {
     let character = event.key;
-    if (character === "Enter"){ //calculate if the user press enter
+    if (character === "*"){character = "×"}
+    if (character === "/"){
+        character = "÷";
+        event.preventDefault();
+    }
+    if (character === "Enter"){ 
         event.preventDefault();
         calculate();
-        equal.style.transform = "scale(0.85)";
-        setTimeout(() => { equal.style.transform = "scale(1)"; }, 200);
+        press(equal);
     }
     else if (character === "Escape"){
         clearCalc();
-        clear.style.transform = "scale(0.85)";
-        setTimeout(() => { clear.style.transform = "scale(1)"; }, 200);
+        press(clear);
     }
-    else if (character === "Backspace"){ //remove last element from the string if user press backspace
+    else if (character === "Backspace"){
         back();
-        backspace.style.transform = "scale(0.85)";
-        setTimeout(() => { backspace.style.transform = "scale(1)"; }, 200);
+        press(backspace);
     }
-    else if (character === "*"){ //add mult sign if user press *
-        operators.forEach((button) => {
-            if ("×" === button.textContent){
-                button.style.transform = "scale(0.85)";
-                setTimeout(() => { button.style.transform = "scale(1)"; }, 200);
-            }
-        })
-        if (stringOperation.length < 12){
-            if (opOK){
-                if (stringResult !== "") {
-                    stringOperation = stringResult;
-                    stringResult = "";
-                    result.textContent = stringResult;
-                }
-                stringOperation += " × ";
-                operation.textContent = stringOperation;
-                dotOK=true;
-                opOK=false;
-            }
-        }
-        else {
-            stringResult = "Expression too long";
-            result.textContent = stringResult;
-        }
-    }
-    else if (character === "/"){
-        operators.forEach((button) => {
-            if ("÷" === button.textContent){
-                button.style.transform = "scale(0.85)";
-                setTimeout(() => { button.style.transform = "scale(1)"; }, 200);
-            }
-        })
-        if (stringOperation.length < 12){
-        event.preventDefault();
-            if (opOK){
-                if (stringResult !== "") {
-                    stringOperation = stringResult;
-                    stringResult = "";
-                    result.textContent = stringResult;
-                }
-                stringOperation += " ÷ ";
-                operation.textContent = stringOperation;
-                dotOK=true;
-                opOK=false;
-            }
-        }
-        else {
-            stringResult = "Expression too long";
-            result.textContent = stringResult;
-        }
-    }
-    else if ((character === "." )&& (dotOK === true)){
+    else if (character === "." ){
         decimal();
-        dot.style.transform = "scale(0.85)";
-        setTimeout(() => { dot.style.transform = "scale(1)"; }, 200);
+        press(dot);
     }
-    else if (/^[0-9]$/.test(character) ){ //add the number to the operation string
+    else if (/^[0-9]$/.test(character) ){ 
         numbers.forEach((button) => {
-            if (character === button.textContent){
-                button.style.transform = "scale(0.85)";
-                setTimeout(() => { button.style.transform = "scale(1)"; }, 200);
-            }
+            if (character === button.textContent){press(button)}
         })
-        if (stringOperation.length < 15){
-            if (stringResult !== "") {
-                stringOperation = "";
-                stringResult = "";
-                result.textContent = stringResult;
-            }
-            stringOperation += character;
-            operation.textContent = stringOperation;
-            opOK=true;
-        }
-        else {
-            stringResult = "Expression too long";
-            result.textContent = stringResult;
-        }
-
+        addNumber(character);
     }
-    else if (character === "+" || character === "-"){
+    else if (character === "+" || character === "-" || character === "÷" || character === "×"){
         operators.forEach((button) => {
-            if (character === button.textContent){
-                button.style.transform = "scale(0.85)";
-                setTimeout(() => { button.style.transform = "scale(1)"; }, 200);
-            }
+            if (character === button.textContent){press(button)}
         })
-        event.preventDefault();
-        if (stringOperation.length < 12){
-            if (opOK){
-                if (stringResult !== "") {
-                    stringOperation = stringResult;
-                    stringResult = "";
-                    result.textContent = stringResult;
-                }
-                stringOperation += " " + character +" ";
-                operation.textContent = stringOperation;
-                dotOK=true;
-                opOK=false;
-            }
-        }
-        else {
-            stringResult = "Expression too long";
-            result.textContent = stringResult;
-        }
+        addOperator(character);
     }
     
 })
@@ -325,23 +237,25 @@ let clearNotePad = document.querySelector("#clearNotePad");
 let lines = 0;
 
 
-addNotePad.addEventListener("click", () => {
-    if (lines >= 10){
-        notepadDisplay.removeChild(notepadDisplay.lastChild);
-        lines--;
+addNotePad.addEventListener("click", () => { //save the calculator line into the notepad
+    if(stringResult !== ""){ //doesn't do anything if there is no result calculated
+        if (lines >= 10){ //if notepad is full, remove the last line to make space for the new one
+            notepadDisplay.removeChild(notepadDisplay.lastChild);
+            lines--;
+        }
+        let display = document.createElement("div");
+        let displayText = document.createElement("p");
+        let displayButton = document.createElement("button");
+        displayText.textContent = operation.textContent + result.textContent;
+        display.appendChild(displayText);
+        display.appendChild(displayButton);
+        notepadDisplay.insertBefore(display, notepadDisplay.children[0]);
+        displayButton.addEventListener("click", () => {
+            notepadDisplay.removeChild(display);
+            lines--;
+        })
+        lines++;
     }
-    let display = document.createElement("div");
-    let displayText = document.createElement("p");
-    let displayButton = document.createElement("button");
-    displayText.textContent = operation.textContent + result.textContent;
-    display.appendChild(displayText);
-    display.appendChild(displayButton);
-    notepadDisplay.insertBefore(display, notepadDisplay.children[0]);
-    displayButton.addEventListener("click", () => {
-        notepadDisplay.removeChild(display);
-        lines--;
-    })
-    lines++;
 })
 
 clearNotePad.addEventListener("click", () => {
