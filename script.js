@@ -94,18 +94,18 @@ const calculate = function(){ //takes the stringOperation, do the calculations a
 }
 
 const back = function(){  //removes last character typed
-    if (stringResult === ""){
-        let string=Array.from(stringOperation);
-        if (string[string.length-1]=== " "){
-            string.splice((string.length-3),3);
-            opOK=true;
-        }
-        else{
-            string.pop();
-        }
-        stringOperation = string.join("");
-        operation.textContent = stringOperation;
+    let string=Array.from(stringOperation);
+    if (string[string.length-1]=== " "){
+        string.splice((string.length-3),3);
+        opOK=true;
     }
+    else{
+        string.pop();
+    }
+    stringOperation = string.join("");
+    operation.textContent = stringOperation;
+    stringResult = "";
+    result.textContent = stringResult;
 }
 
 const decimal = function(){ //check if adding a dot is possible and adds it
