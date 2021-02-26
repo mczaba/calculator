@@ -12,6 +12,10 @@ button {
     border-radius: 8px;
 }
 
+p {
+    margin: 10px 0;
+}
+
 button:active {
     transform: scale(0.85);
 }
@@ -49,7 +53,7 @@ button:active {
     border: 1px black solid;
     border-radius: 8px;
     text-align: center;
-    height: 100px;
+    height: 150px;
     width: 280px;
     font-size: 25px;
     margin-bottom: 25px;
@@ -70,14 +74,14 @@ button:active {
 #result {
     font-style: italic;
     position: absolute;
-    top: 25px;
+    bottom: 0;
     right: 20px;
 }
 
 #buttons {
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: 4fr 1fr;
     height: 250px;
     width: 300px;
     margin-left: auto;
@@ -95,6 +99,13 @@ button:active {
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto auto auto auto;
+}
+
+#parentheses {
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
 }
 
 #rest {
